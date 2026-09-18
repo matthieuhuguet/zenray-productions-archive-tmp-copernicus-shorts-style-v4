@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+"""Generate the two selected V4 style outputs with black text shadows."""
+
+from __future__ import annotations
+
+# 2026-09-18 23:59: Freeze the selected GT Sectra V4 pair without changing the exploration set.
+
+from pathlib import Path
+
+from generate_all_shorts import (
+    ACTIVE_SUBTITLE_KEY,
+    BACKGROUND_SPECS,
+    PARAMS,
+    build_gradient,
+    build_subtitle_layers,
+    build_title_layer,
+    compose_static,
+    prepare_background,
+)
+
+
+BASE_DIR = Path("/Users/zenray/Downloads/materials-copernicus-exercize/tmp-layer")
+SHORTS_DIR = BASE_DIR / "texture-black-white" / "shorts"
+OUTPUT_DIR = SHORTS_DIR / "style-v4-background-variants" / "final-2-outputs"
+
+
+SELECTED_TITLE_KEY = "gt_sectra"
+SELECTED_TITLE_COLOR_KEY = "white"
+SELECTED_SUBTITLE_COLOR_KEY = "white"
+SHADOW_TITLE = {"enabled": True, "color": [0, 0, 0, 230], "offset": 16, "blur": 10}
+SHADOW_SUBTITLE = {"enabled": True, "color": [0, 0, 0, 230], "offset": 20, "blur": 12}
+
+
+def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    for path in OUTPUT_DIR.glob("*.png"):
+        path.unlink()
+
+    PARAMS["title_shadow"] = SHADOW_TITLE
+    PARAMS["subtitle_shadow"] = SHADOW_SUBTITLE
+
+    width = PARAMS["master_width"]
+    height = PARAMS["master_height"]
+    gradient = build_gradient(width, height)
+    title_layer = build_title_layer(
+        SELECTED_TITLE_KEY,
+        width,
+        height,
+        gradient,
+        SELECTED_TITLE_COLOR_KEY,
+    )
+
+    for background_key, background_spec in BACKGROUND_SPECS.items():
+        background = prepare_background(background_key, width, height)
+        first, second, _ = build_subtitle_layers(
+            ACTIVE_SUBTITLE_KEY,
+            SELECTED_SUBTITLE_COLOR_KEY,
+            width,
+            height,
+        )
+        frame = compose_static(background, title_layer, (first, second))
+        color_name = "blue" if background_key.startswith("blue") else "red"
+        output_path = OUTPUT_DIR / f"v4_gt_sectra_white_{color_name}_archive_garamond_white_black_shadow.png"
+        frame.convert("RGB").save(output_path, quality=95)
+        print(output_path)
+
+
+if __name__ == "__main__":
+    main()
