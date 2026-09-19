@@ -1,6 +1,7 @@
 # style-v4-background-variants : feedback, prompts and rules (append only)
 
 ## Prompt log
+- 2026-09-19 00:48 : go push sur le site directement tous ces assets sans exceptions, avec les finaux en evidence
 
 ## Order of work
 
@@ -8,3 +9,4 @@
 
 ## Log
 - 2026-09-18 23:48 : Style V4 créé dans un nouveau dossier pour préserver V3. Le titre est multiplié par 1.25. La matrice et les frames 4K couvrent 3 fontes en Caps Lock, 3 couleurs de titre dont blanc et gris, et 4 couleurs de sous-titre dont blanc et jaune avec Archive Garamond. Le MOV garde les deux backgrounds, supprime le balayage gauche droite et les ombres, puis anime chaque ligne en canon avec fondu de sortie.
+- 2026-09-19 00:48 : Upload terminé : le bundle V4, les trois scripts et les deux backgrounds renommés sont dans ZenRay Assets ; 167/167 fichiers vérifiés dans Create et 167/167 chemins indexés. Les deux finaux restent dans v4/final-2-outputs.

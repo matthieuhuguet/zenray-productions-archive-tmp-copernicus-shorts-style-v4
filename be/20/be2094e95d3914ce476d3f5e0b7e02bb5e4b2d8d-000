@@ -23,3 +23,5 @@ Files:
 * `video/subtitle-background-v4-canon.mov` is the MOV requested for the subtitle and background animation.
 * `video/subtitle-background-v4-canon.mp4` is a browser-friendly companion.
 * `metadata.json` and `metadata.csv` record every generated choice.
+* `final-2-outputs/` contains the three selected V4 frames: blue, red, and yellow backgrounds with the same GT Sectra, Archive Garamond, centered layout, and black text shadow.
+* `background-assets/yellow_layer_03.png` is the moved source for the third background.

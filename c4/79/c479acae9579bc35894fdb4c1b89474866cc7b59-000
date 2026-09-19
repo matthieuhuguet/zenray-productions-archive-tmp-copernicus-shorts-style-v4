@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generate the two selected V4 style outputs with black text shadows."""
+"""Generate the selected V4 style outputs with black text shadows."""
 
 from __future__ import annotations
 
-# 2026-09-18 23:59: Freeze the selected GT Sectra V4 pair without changing the exploration set.
+# 2026-09-20 01:05: Add the yellow canonical background while preserving the blue and red template.
 
+import json
 from pathlib import Path
 
 from generate_all_shorts import (
@@ -29,6 +30,22 @@ SELECTED_TITLE_COLOR_KEY = "white"
 SELECTED_SUBTITLE_COLOR_KEY = "white"
 SHADOW_TITLE = {"enabled": True, "color": [0, 0, 0, 230], "offset": 16, "blur": 10}
 SHADOW_SUBTITLE = {"enabled": True, "color": [0, 0, 0, 230], "offset": 20, "blur": 12}
+YELLOW_BACKGROUND_KEY = "yellow_layer_03"
+YELLOW_BACKGROUND_SPEC = {
+    "label": "Yellow layer 03",
+    "path": str(OUTPUT_DIR.parent / "background-assets" / "yellow_layer_03.png"),
+    "base_rgb": (19, 17, 5),
+    "particle_rgb": (255, 220, 55),
+    "center_y": 0.79,
+    "seed": 3303,
+}
+BACKGROUND_COLOR_NAMES = {
+    "blue_layer_01": "blue",
+    "red_layer_02": "red",
+    YELLOW_BACKGROUND_KEY: "yellow",
+}
+
+BACKGROUND_SPECS[YELLOW_BACKGROUND_KEY] = YELLOW_BACKGROUND_SPEC
 
 
 def main() -> None:
@@ -59,10 +76,23 @@ def main() -> None:
             height,
         )
         frame = compose_static(background, title_layer, (first, second))
-        color_name = "blue" if background_key.startswith("blue") else "red"
+        color_name = BACKGROUND_COLOR_NAMES[background_key]
         output_path = OUTPUT_DIR / f"v4_gt_sectra_white_{color_name}_archive_garamond_white_black_shadow.png"
         frame.convert("RGB").save(output_path, quality=95)
         print(output_path)
+
+    metadata_path = OUTPUT_DIR.parent / "metadata.json"
+    if metadata_path.exists():
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        metadata.setdefault("backgrounds", {})[YELLOW_BACKGROUND_KEY] = YELLOW_BACKGROUND_SPEC
+        metadata["selected_final_outputs"] = [
+            str(path.relative_to(OUTPUT_DIR.parent))
+            for path in sorted(OUTPUT_DIR.glob("*.png"))
+        ]
+        metadata_path.write_text(
+            json.dumps(metadata, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":

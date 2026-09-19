@@ -222,6 +222,22 @@
       ],
       "center_y": 0.79,
       "seed": 2202
+    },
+    "yellow_layer_03": {
+      "label": "Yellow layer 03",
+      "path": "/Users/zenray/Downloads/materials-copernicus-exercize/tmp-layer/texture-black-white/shorts/style-v4-background-variants/background-assets/yellow_layer_03.png",
+      "base_rgb": [
+        19,
+        17,
+        5
+      ],
+      "particle_rgb": [
+        255,
+        220,
+        55
+      ],
+      "center_y": 0.79,
+      "seed": 3303
     }
   },
   "matrix_count": 72,
@@ -2245,5 +2261,10 @@
       "subtitle_color": "red_hint",
       "color_short": "red"
     }
+  ],
+  "selected_final_outputs": [
+    "final-2-outputs/v4_gt_sectra_white_blue_archive_garamond_white_black_shadow.png",
+    "final-2-outputs/v4_gt_sectra_white_red_archive_garamond_white_black_shadow.png",
+    "final-2-outputs/v4_gt_sectra_white_yellow_archive_garamond_white_black_shadow.png"
   ]
 }
